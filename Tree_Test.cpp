@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-size_t main(){
+int main(){
     cout<<"Change SSH"<<endl;
     return 0;
 }
