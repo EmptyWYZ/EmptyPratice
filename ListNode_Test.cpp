@@ -14,11 +14,14 @@ public:
     ListNode *removeElements(ListNode* head, int val){
         if(head->next == NULL) return NULL;
         ListNode* pre = new ListNode(-1);
-        pre->next = head;
+        pre->next = head;//设置虚拟头节点
         ListNode* cur = pre;
+        ListNode* del = NULL;
         while(cur->next != NULL){
             if(cur->next->val == val){
+                del = cur->next;//记录需要删除的节点
                 cur->next = cur->next->next;
+                delete del;//清理无效节点内存
             }else{
                 cur = cur->next;
             }
