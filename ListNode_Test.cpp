@@ -29,7 +29,70 @@ public:
         return pre->next;
     }
 };
-
+class MyLinkedList{
+    public:
+        MyLinkedList() {//初始化
+           pre = new ListNode(0);
+           size = 0;
+        }
+        int get(int index){//取第index的值，若index无效，返回-1
+            if(index < 0 || index > size -1) {
+                return -1;
+            }
+            ListNode* cur = pre->next;
+            while(index--) {
+                cur = cur->next;
+            }
+            return cur->val;
+        }
+        void addAtHead(int val) {//在头部插入最新节点
+            ListNode* cur = new ListNode(val);
+            cur->next = pre->next;
+            pre->next = cur;//重新更新为pre为最新链表
+            size++;
+        }
+        void addAtTail(int val) {//在尾部插入最新节点
+            ListNode* newNode = new ListNode(val);
+            ListNode* cur = pre;
+            while(cur->next != NULL){
+                cur = cur->next;
+            }
+            cur->next = newNode;//在尾部添加新节点
+            size++;
+        }
+        void addAtIndex(int index, int val) {
+            if(index > size){
+                return;
+            }
+            if(index < 0){
+               addAtHead(val);
+            }
+            ListNode* newNode = new ListNode(val);
+            ListNode* cur = pre;
+            while(index--){
+                cur = cur->next;
+            }
+            newNode->next = cur->next;
+            cur->next = newNode;
+            size++;
+        }
+        void deleteAtIndex(int index) {
+            if(index > size || index < 0){
+                return;
+            }
+            ListNode* cur = pre;
+            while(index--){
+                cur = cur->next;
+            }
+            ListNode* delNode = cur->next;
+            cur->next = cur->next->next;
+            delete delNode;
+            size--;          
+        }
+    private:
+        ListNode* pre;
+        int size;
+};
 int main(){
     cout<<"Hello HuaWei Cloud!"<<endl;
     return 0;
