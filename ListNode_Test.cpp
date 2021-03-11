@@ -93,6 +93,33 @@ class MyLinkedList{
         ListNode* pre;
         int size;
 };
+class Reserve{
+    public://单链表反转递归
+        ListNode* reserve(ListNode* pre, ListNode *cur){
+            if(cur == NULL) return pre;
+            ListNode* tmp = cur->next;
+            cur->next = pre;
+            return reserve(cur, tmp);
+        }
+        ListNode* resrveList(ListNode *head){
+            return reserve(NULL, head);
+        }
+        ListNode* reverseList_1(ListNode* head) {//双指针逆转链表
+        if(head == NULL){
+           return NULL; 
+        } 
+        ListNode *pre = NULL;
+        ListNode *cur = head;
+        ListNode *tmp = NULL;
+        while(cur){
+            tmp = cur->next;
+            cur->next = pre;
+            pre = cur;
+            cur = tmp;
+        }
+        return pre;
+    }
+};
 int main(){
     cout<<"Hello HuaWei Cloud!"<<endl;
     return 0;
