@@ -2,7 +2,7 @@
 using namespace std;
 class Solution{
     public:
-        int sorting(int arr[], int len){
+        int sorting(int arr[], int len){//冒泡
 
             if(len == 0) return NULL;
 
