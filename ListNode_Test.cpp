@@ -120,6 +120,28 @@ class Reserve{
         return pre;
     }
 };
+class Circle{
+    public:
+        ListNode *detectCycle(ListNode *head) {
+        // if(head == NUll || head->next == NULL) return NULL;
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while(fast != NULL && fast->next != NULL){//slow->fast
+            slow = slow->next;
+            fast = fast->next->next;
+            if(slow == fast){
+                ListNode *index0 = fast;
+                ListNode *index1 = head;
+                while(index0 != index1){//如果环不在头节点
+                    index1 = index1->next;
+                    index0 = index0->next;
+                }
+                return index1;
+            }
+        }
+        return NULL;
+    }
+};
 int main(){
     cout<<"Hello HuaWei Cloud!"<<endl;
     return 0;
