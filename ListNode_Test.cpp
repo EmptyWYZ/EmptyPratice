@@ -122,7 +122,7 @@ class Reserve{
 };
 class Circle{
     public:
-        ListNode *detectCycle(ListNode *head) {
+        ListNode *detectCycle(ListNode *head) {//寻找链表是否有环
         // if(head == NUll || head->next == NULL) return NULL;
         ListNode* slow = head;
         ListNode* fast = head;
