@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <unordered_set>
+#include <unordered_map>
 using namespace std;
 class Sloution{
     public:
@@ -41,4 +42,31 @@ class HappyNum{
                 n = sum;
             }
         }
+};
+class TwoNumCounter {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        /*暴力解法，复杂度o(n*n)*/
+        // vector<int> ret;
+        // for(int i = 0;i < nums.size() - 1; i++){
+        //     for(int j = i + 1; j < nums.size(); j++){
+        //         if(nums[i] + nums[j] == target){
+        //             ret.push_back(i);
+        //             ret.push_back(j);
+        //             break;
+        //         }
+        //     }
+        // }
+        // return vector<int>(ret.begin(),ret.end());
+        /*哈希*/
+        unordered_map <int, int> ret;
+        for(int i = 0; i < nums.size(); i++) {
+            auto iter = ret.find(target - nums[i]);//同一种元素不能同时出现
+            if(iter != ret.end()) {
+                return {iter->second, i};
+            }
+            ret.insert(pair<int, int>(nums[i], i));
+        }
+        return {};
+    }
 };
