@@ -70,3 +70,23 @@ public:
         return {};
     }
 };
+class FourSumCount {
+public:
+    int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D) {
+        unordered_map<int, int> addAB;//核心思想在于将四个数组压缩为两个数组进行处理
+        int cnt = 0;
+        for(auto &a : A) {
+            for(auto &b : B) {
+                addAB[a + b]++;//统计a和b相加和的统计次数
+            }
+        }
+        for(auto &c : C) {
+            for(auto &d : D) {
+                if(addAB.find(0 - (c + d)) != addAB.end()) {
+                    cnt += addAB[(0 - (c + d))];
+                }
+            }
+        }
+        return cnt;
+    }
+};
