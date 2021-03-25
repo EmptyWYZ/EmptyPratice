@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm>
 #include <unordered_set>
 #include <unordered_map>
 using namespace std;
@@ -88,5 +89,64 @@ public:
             }
         }
         return cnt;
+    }
+};
+class CanConstruct {
+public:
+    bool canConstruct(string ransomNote, string magazine) {
+        // for (int i = 0; i < magazine.size(); i++) {//暴力解法,时间复杂度o(n^2)
+        //     for(int j = 0; j < ransomNote.size(); j++) {
+        //         if(magazine[i] == ransomNote[j]) {//找到相同的就删除那个元素
+        //             ransomNote.erase(ransomNote.begin() + j);
+        //             break;
+        //         }
+        //     }
+        // }
+        // if(ransomNote.size() == 0){
+        //     return true;
+        // }
+        // return false;
+        int comp[26] = {0};//复杂度o(n)
+        for (int i = 0; i < magazine.size(); i++) {
+            comp[magazine[i] - 'a']++;
+        }
+        for(int j = 0; j < ransomNote.size(); j++) {
+            comp[ransomNote[j] - 'a']--;
+            if(comp[ransomNote[j] - 'a'] < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+};
+class ThreeSum {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        //学习
+        vector<vector<int>> ret;
+        sort(nums.begin(), nums.end());
+        for(int i = 0; i < nums.size(); i++) {
+            if(nums[i] > 0) {//排序之后如果第一个元素大于零，其他的就不用聊了
+                continue;
+            }
+            if(i > 0 && nums[i] == nums[i - 1]) {
+                continue;//去重a
+            }
+            unordered_set<int> set;
+            for(int j = i + 1; j < nums.size(); j++) {//去重b
+                if(j > i + 2 && nums[j] == nums[j - 1]
+                             && nums[j - 1] == nums[j - 2]) {
+                    continue;
+                }
+                int c = 0 - (nums[i] + nums[j]);
+                if (set.find(c) != set.end()) {//去重c
+                    ret.push_back({nums[i], nums[j], c});
+                    set.erase(c);
+                }else {
+                    set.insert(nums[j]);
+                } 
+            }
+        }
+        return ret;
     }
 };
