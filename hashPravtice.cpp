@@ -132,16 +132,16 @@ public:
             if(i > 0 && nums[i] == nums[i - 1]) {
                 continue;//去重a
             }
-            unordered_set<int> set;
-            for(int j = i + 1; j < nums.size(); j++) {//去重b
+            unordered_set<int> set;//核心思路是先确认a,b不重复
+            for(int j = i + 1; j < nums.size(); j++) {//去重b,b元素于前与后都不相同,为了防止越界，从最右侧向回找
                 if(j > i + 2 && nums[j] == nums[j - 1]
                              && nums[j - 1] == nums[j - 2]) {
                     continue;
                 }
                 int c = 0 - (nums[i] + nums[j]);
-                if (set.find(c) != set.end()) {//去重c
+                if (set.find(c) != set.end()) {
                     ret.push_back({nums[i], nums[j], c});
-                    set.erase(c);
+                    set.erase(c);//去重c，保证下一次不会有相同的C
                 }else {
                     set.insert(nums[j]);
                 } 
