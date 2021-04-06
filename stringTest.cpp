@@ -1,6 +1,7 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include <algorithm>
 using namespace std;
 class ReverseString {
 public:
@@ -11,6 +12,24 @@ public:
             // s[j] = tmp;
             swap(s[i], s[j]);
         }
+    }
+};
+class ReverseStr {
+public:
+    string reverseStr(string s, int k) {
+        int len = s.size() - 1;
+        for(int i = 0; i < len;) {
+            int tmp = len - i;
+            if(tmp < k) {
+                reverse(s.begin() + i, s.end());
+            }else if(tmp < 2 * k && tmp > k) {
+                reverse(s.begin() + i, s.begin() + i + k);
+            }else{
+                reverse(s.begin() + i, s.begin() + i + k);                
+            }
+            i = i + 2 * k;
+        }
+        return s;
     }
 };
  int main(void) {
