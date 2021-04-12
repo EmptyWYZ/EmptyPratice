@@ -65,17 +65,36 @@ public:
             swap(s[i], s[j]);
         }
     }
-    void rmExtraSpace(string& s) {
-        for(int i = s.size() - 1; i > 0; i--) {
-            if(s[i] == s[i - 1] && s[i] == ' ') {
-                s.erase(s.begin() + i);//删除中间多余空格
+    // void rmExtraSpace(string& s) {
+    //     for(int i = s.size() - 1; i > 0; i--) {
+    //         if(s[i] == s[i - 1] && s[i] == ' ') {
+    //             s.erase(s.begin() + i);//删除中间多余空格
+    //         }
+    //     }
+    //     if(s.size() > 0 && s[s.size() - 1] == ' ') {//删除后面多余空格
+    //         s.erase(s.begin() + s.size() - 1);
+    //     }
+    //     if(s.size() > 0 && s[0] == ' ') {
+    //         s.erase(s.begin());
+    //     }
+    // }
+    void rmExtraSpace(string &s) {//始终用快指针进行多余空格判断，慢指针仅用来判断存取有效数据
+        int slotIndex = 0, fastIndex = 0;
+        //删除前面的多余空格
+        while(s.size() > 0 && s[fastIndex] == ' ' && fastIndex < s.size()) {
+            fastIndex++;
+        }
+        //去掉中间空格
+        for(; fastIndex < s.size(); fastIndex++) {
+            if(fastIndex - 1 > 0 && s[fastIndex - 1] == s[fastIndex] && s[fastIndex] == ' ') {
+                s[slotIndex++] = s[fastIndex];
             }
         }
-        if(s.size() > 0 && s[s.size() - 1] == ' ') {//删除后面多余空格
-            s.erase(s.begin() + s.size() - 1);
-        }
-        if(s.size() > 0 && s[0] == ' ') {
-            s.erase(s.begin());
+        //去掉尾部多余空格
+        if(fastIndex -1 > 0 && s[fastIndex - 1] == ' ') {
+            s.resize(slotIndex - 1);
+        }else {
+            s.resize(slotIndex);
         }
     }
     string reverseWords(string s) {
@@ -105,6 +124,42 @@ public:
 
         }
         return s;
+    }
+};
+class KMP {
+public:
+    void getNext(int *next, const string &s) {
+        int j = -1;
+        next[0] = j;
+        for(int i = 1; i < s.size(); i++) {
+            while(j >= 0 && s[i] != s[j + 1]) {
+                j = next[j];
+            }
+            if(s[i] == s[j + 1]) {
+                j++;
+            }
+            next[i] = j;//更新最长相同前后缀
+        }
+    }
+    int strStr(string haystack, string needle) {
+        if(needle.size() == 0) {
+            return 0;
+        }
+        int next[needle.size()];
+        getNext(next, needle);
+        int j = -1;
+        for(int i = 0;i < haystack.size(); i++) {
+            while(j >= 0 && haystack[i] != needle[j + 1]) {
+                j = next[j];//若不匹配，查找前缀列表
+            }
+            if(haystack[i] == needle[j + 1]) {
+                j++;
+            }
+            if(j == (needle.size() - 1)){//若最长匹配长度走到了needle的末尾
+                return (i - needle.size() + 1);
+            }
+        }
+        return -1;
     }
 };
  int main(void) {
