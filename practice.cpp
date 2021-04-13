@@ -28,5 +28,7 @@ int main() {
     char str1[] = "hello world";
     cout << str1 << endl;
 
+    string str = "hello";
+
     return 0;
 }
